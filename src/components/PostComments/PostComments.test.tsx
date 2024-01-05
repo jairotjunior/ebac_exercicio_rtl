@@ -1,10 +1,17 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import Post from '.';
-import PostComment from '.';
+import PostComment from './index';
 
 describe('Teste para o componente PostComment', () => {
-    it('Deve renderizar o componente corretamente', () => {
+    test('Deve ser adicionado um comentário ao Post', () => {
         render(<PostComment/>);
-        expect(screen.getByText('Comentar')).toBeInTheDocument();
-    });
+        fireEvent.change(screen.getByTestId('campo-comentarios'), {
+            target: {
+                value: 'Ótimo carro'
+            }
+        })
+    })
+    test('Renderizar o comentário no componente', () => {
+        fireEvent.submit(screen.getByTestId('btn-comentar'))
+        expect(screen.getByText('Ótimo carro')).toBeInTheDocument()
+    })
 });
