@@ -1,21 +1,21 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import PostComment from ".";
+import Post from ".";
 
-describe("deve adicionar dois comentários à lista", () => {
-  render(<PostComment />);
+describe("Teste para o componente PostComment", () => {
+  it("Deve permitir a inserção de dois comentários", () => {
+    render(<Post />);
 
-  const input = screen.getByPlaceholderText("Digite seu comentário");
-  const button = screen.getByText("Adicionar Comentário");
+    const input = screen.getByTestId("add-comments");
+    const button = screen.getByTestId("btn-comments");
 
-  // Inserir primeiro comentário
-  fireEvent.change(input, { target: { value: "Primeiro comentário" } });
-  fireEvent.click(button);
+    // Inserir o primeiro comentário
+    fireEvent.change(input, { target: { value: "Primeiro comentário" } });
+    fireEvent.click(button);
+    expect(screen.getByText("Primeiro comentário")).toBeInTheDocument();
 
-  // Inserir segundo comentário
-  fireEvent.change(input, { target: { value: "Segundo comentário" } });
-  fireEvent.click(button);
-
-  // Verificar se os comentários aparecem na tela
-  expect(screen.getByText("Primeiro comentário")).toBeInTheDocument();
-  expect(screen.getByText("Segundo comentário")).toBeInTheDocument();
+    // Inserir o segundo comentário
+    fireEvent.change(input, { target: { value: "Segundo comentário" } });
+    fireEvent.click(button);
+    expect(screen.getByText("Segundo comentário")).toBeInTheDocument();
+  });
 });
